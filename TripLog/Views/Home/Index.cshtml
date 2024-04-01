@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TripLog.Models.Trip>
+
+
+@{
+    ViewBag.Title = "My Trip Log";
+}
+
+<a asp-action="Add" asp-controller="Trip" asp-route-id="page1" class="mt-2"><b>Add Trip</b></a>
+
+
+
+<table class="table table-bordered table-striped mt-2">
+    <thead>
+        <tr>
+            <th>Destination</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Accommodations</th>
+            <th>Things To Do</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Trip trip in Model)
+        {
+            <tr>
+                <td>@trip.Destination.Name</td>
+                <td>@trip.StartDate?.ToShortDateString()</td>
+                <td>@trip.EndDate?.ToShortDateString()</td>
+                <td>
+                    <div>@trip.Accommodation.Name</div>
+                    @if (!string.IsNullOrEmpty(trip.Accommodation.Phone))
+                    {
+                        <div>Phone: @trip.Accommodation.Phone</div>
+                    }
+                    @if (!string.IsNullOrEmpty(trip.Accommodation.Email))
+                    {
+                        <div>Email: @trip.Accommodation.Email</div>
+                    }
+                </td>
+                <td>
+                    @foreach (var activity in trip.TripActivities.Select(ta => ta.Activity))
+                    {
+                        <div>@activity.Name</div>
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@trip.TripId" class="btn btn-danger">Delete</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+

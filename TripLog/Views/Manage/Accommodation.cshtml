@@ -1,0 +1,47 @@
+﻿@model TripLog.Models.ManageAccommodationsViewModel
+
+<h2>Add Accommodation</h2>
+
+<form asp-action="AddAccommodation">
+    <div class="mb-3">
+        <label asp-for="NewAccommodation.Name" class="form-label">Accommodation Name</label>
+        <input asp-for="NewAccommodation.Name" class="form-control" />
+        <span asp-validation-for="NewAccommodation.Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="NewAccommodation.Phone" class="form-label">Phone</label>
+        <input asp-for="NewAccommodation.Phone" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="NewAccommodation.Email" class="form-label">Email</label>
+        <input asp-for="NewAccommodation.Email" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Accommodation</button>
+</form>
+
+
+<table class="table table-bordered table-striped mt-2">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var accommodation in Model.Accommodations)
+        {
+            <tr>
+                <td>@accommodation.Name</td>
+                <td>@accommodation.Phone</td>
+                <td>@accommodation.Email</td>
+                <td>
+                    <form asp-action="DeleteAccommodation" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@accommodation.AccommodationId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+            </tr>
+        }
+    </tbody>
+</table>

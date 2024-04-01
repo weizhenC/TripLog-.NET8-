@@ -1,0 +1,37 @@
+﻿@model TripLog.Models.ManageDestinationsViewModel
+
+
+<h2>Manage Destinations</h2>
+
+<form asp-action="AddDestination">
+    <div class="mb-3">
+        <label asp-for="NewDestination.Name" class="form-label">Destination Name</label>
+        <input asp-for="NewDestination.Name" class="form-control" />
+        <span asp-validation-for="NewDestination.Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Destination</button>
+</form>
+
+
+<table class="table table-bordered table-striped mt-2">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var destination in Model.Destinations)
+        {
+            <tr>
+                <td>@destination.Name</td>
+                <td>
+                    <form asp-action="DeleteDestination" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@destination.DestinationId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+            </tr>
+        }
+    </tbody>
+ </table>
+
